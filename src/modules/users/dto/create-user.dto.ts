@@ -10,7 +10,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { IsUserName } from '../../../decorators/user-name.decorator';
+import { IsNumberPhone } from '../../../decorators/number-phone.decorator';
 
 import { RoleType, StatusCommon } from '../../../constants';
 
@@ -19,17 +19,28 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   @Transform(({ obj }) => obj.userName.trim())
-  @MaxLength(20)
+  @MaxLength(500)
   @MinLength(5)
-  @IsUserName('userName', { message: 'users.USER_NAME_IS_INVALID' })
   userName: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  @MaxLength(40)
-  @Transform(({ obj }) => obj.employeeName.trim())
-  employeeName: string;
+  @MaxLength(1000)
+  @Transform(({ obj }) => obj.address.trim())
+  address: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @Transform(({ obj }) => obj.numberPhone.trim())
+  @MaxLength(20)
+  @MinLength(8)
+  @Matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/, {
+    message: 'INVALID_PHONE_NUMBER',
+  })
+  @IsNumberPhone('numberPhone', { message: 'NUMBER_PHONE_IS_INVALID' })
+  numberPhone: string;
 
   @ApiProperty({ enum: RoleType })
   @IsNotEmpty()
@@ -39,7 +50,7 @@ export class CreateUserDto {
   @ApiPropertyOptional()
   @IsOptional()
   @Transform(({ obj }) => obj.email.trim())
-  @IsEmail({}, { message: 'users.EMAIL_IS_INVALID' })
+  @IsEmail({}, { message: 'EMAIL_IS_INVALID' })
   email?: string;
 
   @ApiProperty()
@@ -49,8 +60,8 @@ export class CreateUserDto {
   @Matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[ !"#$%&'()*+,-./\\:;<=>?@[\]^_`{|}~])[A-Za-z\d !"#$%&'()*+,-./\\:;<=>?@[\]^_`{|}~]{8,20}$/,
     {
-      message: 'users.PASSWORD_INVALID',
-    },
+      message: 'PASSWORD_INVALID',
+    }
   )
   password: string;
 

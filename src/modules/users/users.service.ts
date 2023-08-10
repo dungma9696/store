@@ -15,13 +15,15 @@ export class UsersService {
   constructor(private readonly userRepository: UsersRepository) {}
 
   async createNewUser(
-    createUserDto: CreateUserDto & { createdBy: string },
+    createUserDto: CreateUserDto & { createdBy: string }
   ): Promise<User> {
-    const { userName } = createUserDto;
-    const userExisted = await this.userRepository.TSchema.findOne({ userName });
+    const { numberPhone } = createUserDto;
+    const userExisted = await this.userRepository.TSchema.findOne({
+      numberPhone,
+    });
 
     if (userExisted) {
-      throw new BadRequestException('users.EMAIL_IS_EXISTED');
+      throw new BadRequestException('users.NUMBER_PHONE_IS_EXISTED');
     }
 
     const userSaved = await this.userRepository.TSchema.create(createUserDto);
@@ -83,7 +85,7 @@ export class UsersService {
     }
 
     user.email = updateUserDto.email;
-    user.employeeName = updateUserDto.employeeName;
+    // user.employeeName = updateUserDto.employeeName;
     user.status = updateUserDto.status;
     user.role = updateUserDto.role;
     const userSaved = await this.userRepository.TSchema.create(user);
@@ -97,7 +99,7 @@ export class UsersService {
     }
 
     user.email = updateUserDto.email;
-    user.employeeName = updateUserDto.employeeName;
+    // user.employeeName = updateUserDto.employeeName;
     const userSaved = await this.userRepository.TSchema.create(user);
     return userSaved;
   }
@@ -113,7 +115,7 @@ export class UsersService {
 
   async changePassword(
     id: string,
-    updateUserDto: UserChangePasswordDTO,
+    updateUserDto: UserChangePasswordDTO
   ): Promise<User> {
     const user = await this.userRepository.TSchema.findById(id);
     if (!user) {
@@ -122,7 +124,7 @@ export class UsersService {
 
     const isOldPassword = await bcrypt.compare(
       updateUserDto.oldPassword,
-      user.password,
+      user.password
     );
 
     if (!isOldPassword) {
@@ -135,7 +137,7 @@ export class UsersService {
 
   async adminResetPassword(
     id: string,
-    updateUserDto: AdminResetUserPasswordDTO,
+    updateUserDto: AdminResetUserPasswordDTO
   ): Promise<User> {
     const user = await this.userRepository.TSchema.findById(id);
     if (!user) {

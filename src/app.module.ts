@@ -7,10 +7,12 @@ import { AppService } from './app.service';
 
 import APP_CONFIG from './configs/app.config';
 
+import { ApartmentsModule } from './modules/apartment/apartments.module';
 import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 const passwordEncode = encodeURIComponent(
-  APP_CONFIG.ENV.DATABASE.MONGODB.PASSWORD,
+  APP_CONFIG.ENV.DATABASE.MONGODB.PASSWORD
 );
 // const connectionUri =
 //   `mongodb://${
@@ -32,6 +34,8 @@ const connectionUri =
         uri: connectionUri,
       }),
     }),
+    AuthModule,
+    ApartmentsModule,
     UsersModule,
   ],
   controllers: [],

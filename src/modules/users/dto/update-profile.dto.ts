@@ -16,9 +16,9 @@ export class UpdateProfileDto {
   email?: string;
 
   @ApiProperty()
-  @Transform(({ obj }) => obj.employeeName.trim())
+  @Transform(({ obj }) => obj.address.trim())
   @IsNotEmpty()
   @IsString()
-  @MaxLength(40)
-  employeeName: string;
+  @MaxLength(600)
+  address: string;
 }

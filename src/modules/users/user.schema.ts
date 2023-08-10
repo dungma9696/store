@@ -11,14 +11,20 @@ export class User extends AbstractSchema {
   @Prop({
     required: true,
     unique: true,
-    maxlength: 20,
+    maxlength: 500,
   })
   userName: string;
 
   @Prop({
     required: true,
+    maxlength: 1000,
   })
-  employeeName: string;
+  address: string;
+
+  @Prop({
+    required: true,
+  })
+  numberPhone: string;
 
   @Prop({
     enum: RoleType,
