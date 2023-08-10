@@ -1,5 +1,36 @@
 {
-  "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "assets": [
+      {
+        "include": "configs/**/*.yaml",
+        "watchAssets": true
+      },
+      {
+        "include": "configs/**/*.json",
+        "watchAssets": true
+      },
+      {
+        "include": "grpc/**/*.proto",
+        "watchAssets": true
+      },
+      {
+        "include": "utils/**/**/*.hbs",
+        "watchAssets": true
+      },
+      {
+        "include": "utils/**/**/*.ttf",
+        "watchAssets": true
+      },
+      {
+        "include": "modules-qa/**/**/*.json",
+        "watchAssets": true
+      },
+      {
+        "include": "modules/**/**/*.cer",
+        "watchAssets": true
+      }
+    ]
+  }
 }
