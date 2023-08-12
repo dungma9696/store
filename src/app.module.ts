@@ -10,6 +10,7 @@ import APP_CONFIG from './configs/app.config';
 import { ApartmentsModule } from './modules/apartment/apartments.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { PackagesModule } from './modules/packages/package.module';
 
 const passwordEncode = encodeURIComponent(
   APP_CONFIG.ENV.DATABASE.MONGODB.PASSWORD
@@ -37,6 +38,7 @@ const connectionUri =
     AuthModule,
     ApartmentsModule,
     UsersModule,
+    PackagesModule,
   ],
   controllers: [],
   providers: [],

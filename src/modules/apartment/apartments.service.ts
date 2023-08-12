@@ -34,10 +34,11 @@ export class ApartmentsService {
       throw new BadRequestException('CODE_IS_EXISTED');
     }
 
-    const apartmentSaved = await this.apartmentsRepository.TSchema.create({
-      ...createApartmentDto,
-      code: newCode,
-    });
+    createApartmentDto.code = newCode;
+
+    const apartmentSaved = await this.apartmentsRepository.TSchema.create(
+      createApartmentDto
+    );
 
     return apartmentSaved;
   }
@@ -87,7 +88,7 @@ export class ApartmentsService {
 
   async update(
     id: string,
-    updateUserDto: UpdateApartmentDto
+    updateApartmentDto: UpdateApartmentDto
   ): Promise<Apartment> {
     const apartmentExisted = await this.apartmentsRepository.TSchema.findById(
       id
@@ -96,10 +97,10 @@ export class ApartmentsService {
       throw new BadRequestException('APARTMENT_NOT_EXIST');
     }
 
-    apartmentExisted.representatives = updateUserDto.representatives;
-    apartmentExisted.address = updateUserDto.address;
-    apartmentExisted.name = updateUserDto.name;
-    apartmentExisted.status = updateUserDto.status;
+    apartmentExisted.representatives = updateApartmentDto.representatives;
+    apartmentExisted.address = updateApartmentDto.address;
+    apartmentExisted.name = updateApartmentDto.name;
+    apartmentExisted.status = updateApartmentDto.status;
     const apartmentSaved = await this.apartmentsRepository.TSchema.create(
       apartmentExisted
     );

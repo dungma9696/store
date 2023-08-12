@@ -20,7 +20,7 @@ import { RepresentativeDTO } from './representative.dto';
 import { StatusCommon } from '../../../constants';
 
 export class CreateApartmentDto {
-  @ApiPropertyOptional({ type: String, required: true })
+  @ApiPropertyOptional({ type: String, required: false })
   @IsOptional()
   @IsString()
   @Transform(({ obj }) => obj.code.trim())
@@ -43,12 +43,12 @@ export class CreateApartmentDto {
   @Transform(({ obj }) => obj.address.trim())
   address: string;
 
-  @ApiProperty({ type: RepresentativeDTO, required: true })
-  @IsArray()
-  @Transform(({ obj }) => obj.representatives || [])
+  @ApiProperty({ type: [RepresentativeDTO], required: true })
+  // @Transform(({ obj }) => obj.representatives || [])
   // @IsNotEmptyObject()
   @ValidateNested({ each: true })
   @Type(() => RepresentativeDTO)
+  @IsArray()
   representatives: RepresentativeDTO[];
 
   @ApiProperty({ enum: StatusCommon, required: false })

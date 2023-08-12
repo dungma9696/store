@@ -1,39 +1,28 @@
 import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { StatusCommon } from '../../../constants';
-import { Representative } from './representative.schema';
 import { AbstractSchema } from '../../../database';
 
-export type ApartmentDocument = Apartment & Document;
+export type PackageDocument = Package & Document;
 
 @Schema({ timestamps: true })
-export class Apartment extends AbstractSchema {
+export class Package extends AbstractSchema {
   @Prop({
     required: true,
     unique: true,
-    maxlength: 500,
+    maxlength: 1000,
   })
   name: string;
 
   @Prop({
     required: true,
-    unique: true,
-    maxlength: 100,
   })
-  code: string;
+  numberProduct: number;
 
   @Prop({
     required: true,
   })
-  address: string;
-
-  @Prop([
-    {
-      required: true,
-      type: Representative,
-    },
-  ])
-  representatives: Representative[];
+  fee: number;
 
   @Prop({ enum: StatusCommon, default: StatusCommon.ACTIVE })
   status: StatusCommon;
@@ -42,7 +31,7 @@ export class Apartment extends AbstractSchema {
   createdBy?: string;
 }
 
-export const ApartmentSchema = SchemaFactory.createForClass(Apartment);
+export const PackageSchema = SchemaFactory.createForClass(Package);
 export default MongooseModule.forFeature([
-  { name: Apartment.name, schema: ApartmentSchema },
+  { name: Package.name, schema: PackageSchema },
 ]);

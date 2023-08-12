@@ -23,7 +23,7 @@ async function bootstrap() {
     preflightContinue: CONFIG.ENV.SHARE.SECURE.CORS.PREFLIGHT_CONTINUE,
   });
 
-  app.setGlobalPrefix(`/${API_PREFIX}/${API_VERSION}`);
+  app.setGlobalPrefix(`/${API_PREFIX}`);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.use(helmet());
   app.use(compression());
